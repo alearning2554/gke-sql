@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    iam.gke.io/gcp-service-account: gke-sql@single-archive-466109-a1.iam.gserviceaccount.com
+  name: gke-sql
+  namespace: default

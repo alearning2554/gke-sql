@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: deploy-task-backend
+  name: deploy-task-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: task-backend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: task-backend
+    spec:
+      containers:
+      - image: bhabanisn/task-backendmysql
+        name: task-backend-con
+        env :
+         - name: spring.datasource.url
+           value: jdbc:mysql://34.16.4.198:3306/gke
+         - name: spring.datasource.username
+           value: gke
+         - name: spring.datasource.password
+           value: gke
+        resources:
+          requests:
+            cpu: 50m
+            memory: 100Mi
