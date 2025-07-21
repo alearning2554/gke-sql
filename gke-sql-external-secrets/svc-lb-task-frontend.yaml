@@ -15,5 +15,6 @@ spec:
   selector:
     app: task-frontend
   type: LoadBalancer
+  #loadBalancerIP: "" # create static ip and provide here. Otherwise google create ip address.
 status:
   loadBalancer: {}
