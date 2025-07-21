@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  datasourceurl: jdbc:mysql://127.0.0.1:3306/gke
+  dbusername: gke-sql@your-project.iam.gserviceaccount.com
+kind: ConfigMap
+metadata:
+  name: gke
