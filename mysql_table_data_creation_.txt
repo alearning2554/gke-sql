@@ -4,3 +4,11 @@ Also create user called sqluser with password sql123 if you want to use the file
 
 CREATE TABLE task (task_id VARCHAR(50), task_name VARCHAR(100), task_priority VARCHAR(50) );
 insert into task values('Task1' , 'My Task 1' , 'High');
+
+## installing ESO
+
+helm repo add external-secrets https://charts.external-secrets.io
+helm upgrade --install external-secrets external-secrets/external-secrets \
+  --namespace external-secrets \
+  --create-namespace \
+  -f eso-values.yaml
