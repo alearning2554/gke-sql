@@ -15,5 +15,6 @@ spec:
   selector:
     app: task-frontend
   type: LoadBalancer
+  #loadBalancerIP: 34.42.213.128 - create staiic ip and mention here. otherwise gcp will create ip address.
 status:
   loadBalancer: {}
