@@ -1,0 +1,18 @@
+installCRDs: true
+
+# Configure default secret store
+defaultClusterSecretStore:
+  name: gcp-secrets-store
+  kind: ClusterSecretStore
+
+# Webhook and leader election enabled by default
+webhook:
+  enabled: true
+
+leaderElection:
+  enabled: true
+
+# Optional: restrict which namespaces ESO can watch (remove this to allow all)
+# restrictToNamespaces:
+#   - default
+#   - dev
