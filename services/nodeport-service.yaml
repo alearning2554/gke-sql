@@ -1,0 +1,22 @@
+## service controller creates target pool as backend if we use load balancer (external network pass through load balancer) and instance group as backend when use internal load balancer
+# Target Pools: Used for legacy, external, passthrough load balancers (simple, direct Layer 4 TCP/UDP forwarding).
+#Instance Groups: Used for internal load balancers (and all modern backend-service-based load balancers), supporting more features (e.g., health checks, autoscaling).
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo-loadbalancer
+  annotations:
+    networking.gke.io/load-balancer-type: "Internal"
+    networking.gke.io/internal-load-balancer-allow-global-access: "true" # so that instances from other region can able to access it but within same vpc only
+    #cloud.google.com/neg: '{"exposed_ports": {"80":{}}}' - it enables cloud native load balancing. this port should be same as service port.load balaning directly sends traffic to pods. but there is drawback wit this approach
+spec:
+  #type: NodePort
+  #type: ClusterIP
+  type: LoadBalancer
+  selector:
+    app: echo
+  ports:
+  - port: 80
+    targetPort: 5678
+
+  
