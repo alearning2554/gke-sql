@@ -18,5 +18,8 @@ spec:
   ports:
   - port: 80
     targetPort: 5678
+# For LoadBalancer Services in GKE, no manual firewall opening for NodePorts is needed for normal use—the platform handles this.
+
+Direct NodePort access (for NodePort-type services) requires you to open those ports in your firewall for the relevant IP ranges.
 
   
