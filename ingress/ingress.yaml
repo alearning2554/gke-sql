@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    #kubernetes.io/ingress.class: "gce-internal"
+    kubernetes.io/ingress.class: "gce-internal" # this is to create internal load balancer
+    #kubernetes.io/ingress.global-static-ip-name: "test" # reserve global static ip and provide the name here
+    #networking.gke.io/v1beta1.FrontendConfig: "https-redirect-config"
+    #kubernetes.io/ingress.allow-http: "false" - Prevents the load balancer from accepting HTTP (port 80) traffic.
+spec:
+  #tls:                      # This is to add certificate. mention host here if we have public host
+  #  - secretName: my-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /v2
+            pathType: Prefix
+            backend:
+              service:
+                name: svc-v2
+                port:
+                  number: 80
+          - path: /v1
+            pathType: Prefix
+            backend:
+              service:
+                name: svc-v1
+                port:
+                  number: 80
