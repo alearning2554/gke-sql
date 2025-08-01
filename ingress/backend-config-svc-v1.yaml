@@ -1,0 +1,13 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: v1
+  namespace: default   # replace with your Deployment namespace
+spec:
+  healthCheck:
+    requestPath: /v1          # your custom health check path
+    port: 8080                # port your app listens on
+    checkIntervalSec: 10
+    timeoutSec: 5
+    healthyThreshold: 2
+    unhealthyThreshold: 3

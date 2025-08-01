@@ -6,17 +6,17 @@ kind: Service
 metadata:
   name: svc-v2
   annotations:
+    cloud.google.com/backend-config: '{"ports": {"http":"v2"}}'
     #networking.gke.io/load-balancer-type: "Internal"
     #networking.gke.io/internal-load-balancer-allow-global-access: "true" # so that instances from other region can able to access it but within same vpc only
     #cloud.google.com/neg: '{"exposed_ports": {"80":{}}}' - it enables cloud native load balancing. this port should be same as service port.load balaning directly sends traffic to pods. but there is drawback wit this approach
 spec:
   #type: NodePort
-  #type: ClusterIP
   type: ClusterIP
   selector:
     app: v2
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: http
 
   

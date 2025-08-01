@@ -4,13 +4,20 @@ metadata:
   name: ingress
   annotations:
     #kubernetes.io/ingress.class: "gce-internal"
-    kubernetes.io/ingress.class: "gce-internal" # this is to create internal load balancer
+    kubernetes.io/ingress.class: "gce" # this is to create internal load balancer
     #kubernetes.io/ingress.global-static-ip-name: "test" # reserve global static ip and provide the name here
     #networking.gke.io/v1beta1.FrontendConfig: "https-redirect-config"
     #kubernetes.io/ingress.allow-http: "false" - Prevents the load balancer from accepting HTTP (port 80) traffic.
+    #ingress.gcp.kubernetes.io/pre-shared-cert: certificate-name   - this is to mention certificate from certificate manager
+    #networking.gke.io/ssl-policy: my-ssl-policy - this is for security only
 spec:
   #tls:                      # This is to add certificate. mention host here if we have public host
   #  - secretName: my-tls-secret
+  # defaultBackend:
+  #   service:
+  #     name: my-custom-default-service
+  #     port:
+  #       number: 80
   rules:
     - http:
         paths:

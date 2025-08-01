@@ -6,6 +6,7 @@ kind: Service
 metadata:
   name: svc-v1
   annotations:
+      cloud.google.com/backend-config: '{"ports": {"http":"v1"}}'
     #networking.gke.io/load-balancer-type: "Internal"
     #networking.gke.io/internal-load-balancer-allow-global-access: "true" # so that instances from other region can able to access it but within same vpc only
     #cloud.google.com/neg: '{"exposed_ports": {"80":{}}}' - it enables cloud native load balancing. this port should be same as service port.load balaning directly sends traffic to pods. but there is drawback wit this approach
@@ -17,6 +18,15 @@ spec:
     app: v1
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: http
+
+# GCE external creates zonal NEGs → ✅ Correct
+
+# GCE internal creates MIGs → ✅ Only if you're not using NEG annotations
+
+# Ingress Type	Backend Used	Uses NEG?	Uses MIG?	Comment
+# GCE External	Zonal NEGs (Pods)	✅ Yes	❌ No	Default behavior
+# GCE Internal	MIGs (NodePorts)	❌ No	✅ Yes	Unless you use NEG annotation
+# GCE Internal + NEG	Zonal NEGs (Pods)	✅ Yes	❌ No	Modern setup
 
   
