@@ -1,0 +1,34 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-demo
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: hpa-demo
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50  # target average CPU is 50%
+
+# by default, stabilizationWindowSeconds is 300 seconds. so it is below 50% for 300 sec, then only hpa controller will scale down replica.
+# stabilizationWindowSeconds can be changed by using behaviour.
+# behavior:
+#     scaleDown:
+#       stabilizationWindowSeconds: 180  # Wait 3 minutes before scaling down
+#       policies:
+#       - type: Percent
+#         value: 100
+#         periodSeconds: 60
+#
+# For each pod, the current CPU usage as a percent of the requested amount is calculated:
+
+# For example, if a pod with a 100m CPU request is using 50m:
+
+# Utilization = (50m / 100m) × 100 = 50%

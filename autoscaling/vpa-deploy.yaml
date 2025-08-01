@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vpa-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vpa-demo
+  template:
+    metadata:
+      labels:
+        app: vpa-demo
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["sh", "-c"]
+        args:
+          - while true; do echo 'Generating CPU load'; yes > /dev/null & sleep 10; kill $!; sleep 5; done
+        resources:
+          requests:
+            cpu: 20m
+            memory: 32Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+# https://www.perplexity.ai/spaces/autoscaling-in-gke-xdE9chyFSgSP.jJD1azSvA

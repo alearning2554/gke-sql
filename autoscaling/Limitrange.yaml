@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: container-resource-limits
+  namespace: default      # specify your target namespace
+spec:
+  limits:
+  - type: Container
+    max:
+      cpu: "1"
+      memory: 1Gi
+    min:
+      cpu: "100m"
+      memory: 128Mi
+    default:
+      cpu: "100m"
+      memory: 512Mi
+    defaultRequest:
+      cpu: "100m"
+      memory: 512Mi
+
+
+# it can set for pod also
+# limits:
+#   - type: Pod
+#     max:
+#       memory: 2Gi
+#     min:
+#       memory: 128Mi
+# ResourceQuota: Controls the total resources a namespace can use (sum of all pods etc.).
+
+# LimitRange: Controls per-Pod or per-Container limits/requests (and defaults) inside a namespace
