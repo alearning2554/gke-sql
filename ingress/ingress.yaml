@@ -8,10 +8,10 @@ metadata:
     #kubernetes.io/ingress.global-static-ip-name: "test" # reserve global static ip and provide the name here
     #networking.gke.io/v1beta1.FrontendConfig: "https-redirect-config"
     #kubernetes.io/ingress.allow-http: "false" - Prevents the load balancer from accepting HTTP (port 80) traffic.
-    #ingress.gcp.kubernetes.io/pre-shared-cert: certificate-name   - this is to mention certificate from certificate manager
-    #networking.gke.io/ssl-policy: my-ssl-policy - this is for security only
+    #ingress.gcp.kubernetes.io/pre-shared-cert: certificate-name   - this is to mention certificate from certificate manager. when this is mentioned no need to create secret and  mention tls under spec
+    #networking.gke.io/ssl-policy: my-ssl-policy - this is for security purpose only. create it console and mention the name here
 spec:
-  #tls:                      # This is to add certificate. mention host here if we have public host
+  #tls:                      # This is to add certificate. mention host here if we have public host. if brinding certificate from certificate manager, then this is not required.
   #  - secretName: my-tls-secret
   # defaultBackend:
   #   service:
