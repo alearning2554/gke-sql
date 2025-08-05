@@ -1,0 +1,12 @@
+# not recommended approach as nodes are dynamic with gke
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-on-specific-node
+spec:
+  nodeName: node-1  # Replace with actual node name
+  containers:
+    - name: nginx
+      image: nginx:latest
+      ports:
+        - containerPort: 80

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment-1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      nodeSelector:
+        type: gp
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+
+# When will a pod go into Pending?
+# Only if both of these happen:
+
+# You define nodeSelector: type=gp in your pod/deployment.
+
+# No node has that label — OR the node is unschedulable (e.g., due to taint, resource pressure).

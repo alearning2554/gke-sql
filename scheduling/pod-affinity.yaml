@@ -1,0 +1,23 @@
+#Pod Affinity lets you specify that a pod should be scheduled on the same node (or topology domain) as other specific pods, usually based on labels.
+# kubernetes.io/hostname → node
+# topology.kubernetes.io/zone → zone
+# topology.kubernetes.io/region → region
+# Place a pod on the same node as a pod with label app=redis.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-affinity
+spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - redis
+          topologyKey: "kubernetes.io/hostname"
+  containers:
+    - name: nginx
+      image: nginx
