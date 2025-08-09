@@ -1,0 +1,22 @@
+# apiVersion: networking.k8s.io/v1
+# kind: NetworkPolicy
+# metadata:
+#   name: deny-all
+#   namespace: default
+# spec:
+#   podSelector: {}   # Selects all pods in the namespace
+#   policyTypes:
+#   - Ingress
+#   - Egress
+
+# | **policyTypes**             | **Ingress rules**  | **Egress rules**   | **Ingress effect** | **Egress effect** |
+# | --------------------------- | ------------------ | ------------------ | ------------------ | ----------------- |
+# | *(none — no NetworkPolicy)* | N/A                | N/A                | Allow all          | Allow all         |
+# | `Ingress` only              | `- {}` (allow all) | *(none defined)*   | Allow all          | Allow all         |
+# | `Ingress` only              | `[]` (no allow)    | *(none defined)*   | **Block all**      | Allow all         |
+# | `Egress` only               | *(none defined)*   | `- {}` (allow all) | Allow all          | Allow all         |
+# | `Egress` only               | *(none defined)*   | `[]` (no allow)    | Allow all          | **Block all**     |
+# | `Ingress, Egress`           | `- {}` (allow all) | `- {}` (allow all) | Allow all          | Allow all         |
+# | `Ingress, Egress`           | `- {}` (allow all) | `[]` (no allow)    | Allow all          | **Block all**     |
+# | `Ingress, Egress`           | `[]` (no allow)    | `[]` (no allow)    | **Block all**      | **Block all**     |
+# | `Ingress, Egress`           | `[]` (no allow)    | `- {}` (allow all) | **Block all**      | Allow all         |

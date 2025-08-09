@@ -1,0 +1,72 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: all-ns-test
+  namespace: default
+spec:
+  podSelector: {}   # Selects all pods in the namespace
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            ns: test
+      ports:
+        - port: 80
+          protocol: TCP
+  egress:
+    - to:
+      - namespaceSelector:
+          matchLabels:
+            ns: test
+      ports:
+        - port: 80
+          protocol: TCP
+# full ingress and egreess policy
+# apiVersion: networking.k8s.io/v1
+# kind: NetworkPolicy
+# metadata:
+#   name: complex-policy
+#   namespace: my-namespace
+# spec:
+#   podSelector:
+#     matchLabels:
+#       app: backend
+#   policyTypes:
+#   - Ingress
+#   - Egress
+#   ingress:
+#   - from:
+#     - podSelector:
+#         matchLabels:
+#           app: frontend
+#     - namespaceSelector:
+#         matchLabels:
+#           env: prod
+#     - ipBlock:
+#         cidr: 192.168.1.0/24
+#         except:
+#         - 192.168.1.5/32
+#     ports:
+#     - protocol: TCP
+#       port: 80
+#   egress:
+#   - to:
+#     - ipBlock:
+#         cidr: 0.0.0.0/0
+#         except:
+#         - 10.0.0.0/8
+#     ports:
+#     - protocol: TCP
+#       port: 443
+#   - to:
+#     - namespaceSelector:
+#         matchLabels:
+#           env: dev
+#     ports:
+#     - protocol: TCP
+#       port: 3306
+
+
