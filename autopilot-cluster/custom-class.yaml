@@ -1,0 +1,38 @@
+# You can use nodeselector or node affinity
+# https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-compute-classes
+
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: hello-app
+    spec:
+      replicas: 3
+      selector:
+        matchLabels:
+          app: hello-app
+      template:
+        metadata:
+          labels:
+            app: hello-app
+        spec:
+          #nodeSelector:
+          #cloud.google.com/compute-class: "Balanced"
+          terminationGracePeriodSeconds: 25
+          containers:
+          - name: hello-app
+            image: us-docker.pkg.dev/google-samples/containers/gke/hello-app:1.0
+            resources:
+              requests:
+                cpu: "2000m"
+                memory: "2Gi"
+                ephemeral-storage: "1Gi"
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: cloud.google.com/compute-class
+                    operator: In
+                    values:
+                    - "Balanced"
+      
