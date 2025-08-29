@@ -1,0 +1,110 @@
+
+how to register cluster to fleet: https://cloud.google.com/kubernetes-engine/fleet-management/docs/register/gke
+register to cross project: https://cloud.google.com/kubernetes-engine/fleet-management/docs/before-you-begin/gke#gke-cross-project
+
+
+GKE Standard vs. GKE Enterprise
+🔹 GKE Standard
+
+The default managed Kubernetes service in Google Cloud.
+
+You get:
+
+Managed control plane (Google runs & upgrades it).
+
+You manage node pools (VMs under the hood).
+
+Cluster lifecycle automation (create, upgrade, scale).
+
+Built-in integrations with logging, monitoring, IAM.
+
+Pricing: You pay for control plane + nodes (VMs).
+
+Best for teams/projects that just need Kubernetes clusters with basic GCP integrations.
+
+🔹 GKE Enterprise
+
+Built on top of GKE Standard, but adds enterprise-grade features for multi-cluster, multi-project, and multi-team setups.
+
+Includes GKE Enterprise edition of Anthos (integrated management + security).
+
+Key Benefits:
+
+1. Fleet Management (Multi-cluster / Multi-project)
+
+You can register multiple clusters into a Fleet (even across projects).
+
+Single-pane-of-glass for cluster + workload visibility.
+
+Policies, configs, and RBAC can be applied fleet-wide.
+
+2. Centralized Policy & Config Management
+
+Config Sync → Apply GitOps-style configs to multiple clusters.
+
+Policy Controller → Enforce security/compliance guardrails across clusters.
+
+3. Service Mesh (Istio-based, fully managed)
+
+Out-of-the-box secure service-to-service communication with mTLS, traffic policies, observability.
+
+Easier zero-trust networking for enterprises.
+
+4. Workload Security & Governance
+
+Binary Authorization → Ensure only trusted/container-scanned images run.
+
+Workload Identity Federation → Strong identity integration with IAM.
+
+Built-in vulnerability scanning & compliance checks.
+
+5. Multi-environment & Hybrid Flexibility
+
+Manage on-prem clusters, other cloud clusters, or GKE clusters → all under one umbrella.
+
+Useful if your org is hybrid or multi-cloud.
+
+6. Enterprise Support & SLAs
+
+99.95% SLA for multi-zonal + enterprise-grade Google Cloud support.
+
+What is Config Sync?
+
+A GitOps tool in GKE Enterprise that continuously syncs your Kubernetes configs from a Git repo into one or many clusters.
+
+You don’t kubectl apply manually → you just commit YAML to Git, and Config Sync applies it across your fleet.
+
+Policy Controller is a gatekeeper for your clusters.
+
+It lets you define rules (policies) about what can and cannot be deployed.
+
+It enforces security, compliance, and best practices across your GKE clusters.
+
+It is built on Open Policy Agent (OPA) Gatekeeper but comes pre-integrated with GKE Enterprise.
+
+Example Use Cases
+
+Security:
+
+Pods cannot run as root.
+
+Only signed container images are allowed.
+
+Enforce resource limits (CPU/memory).
+
+Governance:
+
+All resources must have a team: label.
+
+Only certain namespaces can be created.
+
+Compliance:
+
+Must use specific storage classes.
+
+Restrict images to private registries only.
+
+Policy constraints: https://cloud.google.com/kubernetes-engine/enterprise/policy-controller/docs/latest/reference/constraint-template-library#k8sreplicalimits
+
+
+

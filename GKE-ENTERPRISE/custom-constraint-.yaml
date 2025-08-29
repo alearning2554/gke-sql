@@ -1,0 +1,34 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8smaxdeployments
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sMaxDeployments
+      validation:
+        openAPIV3Schema:
+          properties:
+            maxDeployments:
+              type: integer
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8smaxdeployments
+
+        violation[{"msg": msg}] {
+          input.review.kind.kind == "Deployment"
+          ns := input.review.object.metadata.namespace
+
+          # count how many Deployments already exist in this namespace
+          deployment_count := count([d | d := data.inventory.namespace[ns].apps.deployments[_]])
+
+          max := input.parameters.maxDeployments
+          deployment_count > max
+
+          msg := sprintf(
+            "Namespace %v has %v Deployments, exceeding the limit of %v",
+            [ns, deployment_count, max]
+          )
+        }
