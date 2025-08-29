@@ -106,5 +106,11 @@ Restrict images to private registries only.
 
 Policy constraints: https://cloud.google.com/kubernetes-engine/enterprise/policy-controller/docs/latest/reference/constraint-template-library#k8sreplicalimits
 
+If you enable pod related customize fleet setitngs in feature manager in GKE Enterprise, it will restrict few options like security context.
 
+Baseline → don’t run dangerous pods.
+
+Restricted → force pods to be strictly secure.
+
+Policy Essentials → enforce extra company rules (labels, image sources, resource limits).
 
